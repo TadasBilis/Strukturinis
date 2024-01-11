@@ -1,0 +1,60 @@
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+using namespace std;
+
+struct menuItemType {
+  string menuItem;
+  double menuPrice;
+};
+
+void getData(menuItemType menuList[]);
+void showMenu(menuItemType menuList[]);
+void printCheck(menuItemType menuList[], int uzsak[], int n);
+
+int main() {
+  menuItemType menuList[8];
+  int uzsak[8] = {0};
+  getData(menuList);
+  showMenu(menuList);
+  int patiek;
+  int kiekis;
+  cout << "Pasirinkite norimus patiekalus pagal numerius: ";
+  cin >> patiek;
+  cout << "Kiek norite vienetų: ";
+  cin >> kiekis;
+  uzsak[patiek - 1] += kiekis;
+  printCheck(menuList, uzsak, 8);
+  return 0;
+}
+
+void getData(menuItemType menuList[]) {
+  menuList[0] = {"Kiaušinienė", 1.45};
+  menuList[1] = {"Kiaulienos šoninė su keptu kiaušiniu", 2.45};
+  menuList[2] = {"Keksiukas su vyšnia", 0.99};
+  menuList[3] = {"Prancūziškas skrebutis", 1.99};
+  menuList[4] = {"Vaisių salotos", 2.49};
+  menuList[5] = {"Pusryčių dribsniai", 0.69};
+  menuList[6] = {"Kava", 0.50};
+  menuList[7] = {"Arbata", 0.75};
+}
+
+void showMenu(menuItemType menuList[]) {
+  cout << "Sveiki atvykę į restoraną \"Pavadinimas\"" << endl;
+  for (int i = 0; i < 8; i++) {
+    cout << i + 1 << " " << menuList[i].menuItem << " " << menuList[i].menuPrice
+         << "€" << endl;
+  }
+}
+
+void printCheck(menuItemType menuList[], int uzsak[], int n) {
+  cout << fixed << setprecision(2);
+  double bs = 0;
+  for (int i = 0; i < n; i++) {
+    bs += uzsak[i] * menuList[i].menuPrice;
+  }
+  double mokestis = bs * 0.09;
+
+  cout << "Mokesčiai " << mokestis << "€" << endl;
+  cout << "Galutinė suma " << bs + mokestis << "€" << endl;
+}
